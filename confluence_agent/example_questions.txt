@@ -1,0 +1,19 @@
+Basic Questions
+What are open-source LLMs, and how do they differ from proprietary models?
+Why do open-source LLMs require substantial computing power to run locally?
+What are the benefits of using hosted API services for open-source LLMs?
+How can I sign up for Together AI and what are the benefits?
+Technical Questions
+How does the Together AI API allow interaction with open-source LLMs?
+What is the purpose of the TOGETHER_API_KEY in the code?
+What parameters can be adjusted in the API request to customize model output?
+How does the temperature parameter affect the response generation?
+Implementation & Best Practices
+What steps are involved in setting up the Together API for querying LLMs?
+How does the script handle user input for querying an LLM?
+What precautions should be taken when using API keys in a Python script?
+What are the limitations of the free credits provided by Together AI?
+Comparisons & Insights
+How does the Llama-2-7b model compare to OpenAI's ChatGPT?
+What are some alternatives to Together AI for accessing open-source LLMs?
+Why would someone prefer using Together AI over running models locally?

@@ -1,0 +1,84 @@
+{
+  "faq": [
+    {
+      "question": "What is Amazon SageMaker Unified Studio?",
+      "response": "Amazon SageMaker Unified Studio is a unified development experience that brings together AWS data, analytics, AI, and ML services into a single interface for collaboration and agile development."
+    },
+    {
+      "question": "How do I access Amazon SageMaker Unified Studio?",
+      "response": "You can access SageMaker Unified Studio using your IAM credentials, single sign-on (SSO), or a domain URL provided by your administrator."
+    },
+    {
+      "question": "Why am I unable to assume an IAM role in SageMaker Unified Studio?",
+      "response": "Ensure the IAM role has a trust relationship with the Amazon DataZone service principal and the necessary permissions are assigned."
+    },
+    {
+      "question": "What are domain units in SageMaker Unified Studio?",
+      "response": "Domain units allow organizations to structure their assets and users into business units or teams for better management and authorization control."
+    },
+    {
+      "question": "How do I create a new project in SageMaker Unified Studio?",
+      "response": "Navigate to the Studio landing page, select 'Create Project', enter a name, select a project profile, and configure necessary settings before creating the project."
+    },
+    {
+      "question": "How do I fix a project creation failure in SageMaker Unified Studio?",
+      "response": "Ensure the target account and region are correctly associated, the project profile is configured properly, and your SSO user has appropriate permissions."
+    },
+    {
+      "question": "How can I add existing AWS Glue tables to SageMaker Unified Studio?",
+      "response": "Go to your project page, select 'Data Sources', choose 'Create Data Source', select AWS Glue, and follow the setup instructions."
+    },
+    {
+      "question": "What is the Query Editor in SageMaker Unified Studio?",
+      "response": "The Query Editor is a tool that enables users to write and execute SQL queries against AWS data sources like Amazon Athena and Redshift."
+    },
+    {
+      "question": "Why can’t I see my databases in the Data Explorer?",
+      "response": "Ensure the necessary IAM permissions are configured correctly and consider removing permission boundaries if necessary."
+    },
+    {
+      "question": "How can I enable access to Amazon Redshift in SageMaker Unified Studio?",
+      "response": "You need to configure the correct IAM role, establish the right connections, and verify Redshift access permissions."
+    },
+    {
+      "question": "What should I do if my SageMaker Jupyter Notebook is running out of disk space?",
+      "response": "Navigate to JupyterLab, locate the Jobs folder, and delete unnecessary files to free up disk space."
+    },
+    {
+      "question": "How do I set up Visual ETL in SageMaker Unified Studio?",
+      "response": "You can use the Visual ETL tool to build ETL pipelines by defining data sources, applying transformations, and scheduling workflows."
+    },
+    {
+      "question": "What is the Amazon Q coding assistant in SageMaker Unified Studio?",
+      "response": "Amazon Q Developer is an AI-powered assistant that provides code suggestions, auto-completions, and inline recommendations to improve developer productivity."
+    },
+    {
+      "question": "How do I add a data source to a chat agent app in SageMaker Unified Studio?",
+      "response": "Navigate to the chat agent app, select 'Use Knowledge Base', create a new Knowledge Base, and upload your structured data (e.g., CSV files)."
+    },
+    {
+      "question": "How can I use Amazon Bedrock with SageMaker Unified Studio?",
+      "response": "Amazon Bedrock allows you to build generative AI applications within SageMaker Unified Studio by using foundation models in a chat playground or a structured app."
+    },
+    {
+      "question": "How do I troubleshoot AWS Lake Formation permissions in SageMaker Unified Studio?",
+      "response": "Ensure your IAM role has the necessary permissions and that the Amazon S3 location of the asset is registered in AWS Lake Formation."
+    },
+    {
+      "question": "Can I use third-party Git repositories with SageMaker Unified Studio?",
+      "response": "Yes, you can integrate third-party Git repositories like GitHub, GitLab, and Bitbucket instead of using AWS CodeCommit."
+    },
+    {
+      "question": "How do I configure SageMaker Studio to connect to Amazon RDS in a separate VPC?",
+      "response": "You need to set up VPC peering, a Transit Gateway, or deploy a new SageMaker domain in the target VPC."
+    },
+    {
+      "question": "What is a blueprint in SageMaker Unified Studio?",
+      "response": "A blueprint is a predefined configuration that provides project profiles with access to specific AWS services and tools within SageMaker Unified Studio."
+    },
+    {
+      "question": "How can I grant fine-grained access control in SageMaker Unified Studio?",
+      "response": "You can define row and column filters and assign access policies to users, projects, and groups to enforce fine-grained data access control."
+    }
+  ]
+}
