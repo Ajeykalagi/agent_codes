@@ -9,9 +9,17 @@ from langchain_openai import ChatOpenAI
 from langchain.prompts import ChatPromptTemplate
 from langchain.schema.output_parser import StrOutputParser
 
-# Initialize LLM
+# Initialize LLM and Embeddings
 llm = ChatOpenAI(model_name="gpt-4", temperature=0.2)
-embedding_folder_path = "embedding_file"
+embedding = OpenAIEmbeddings()
+
+# Define embedding folder path
+embedding_folder_path = os.path.join(os.path.dirname(__file__), "embedding_file")
+
+# Ensure the folder exists
+if not os.path.isdir(embedding_folder_path):
+    print(f" Error: Missing folder {embedding_folder_path}. Please create it.")
+    exit(1)
 
 class RAGProcessingAgent(Agent):
     def __init__(self):
@@ -24,39 +32,34 @@ class RAGProcessingAgent(Agent):
         )
 
     def ingest_and_embed(self, pdf_path):
-        """Extracts text from PDF and stores embeddings in FAISS, saving to a FAISS index file"""
-        #faiss_index_file = pdf_path.replace(".pdf", ".faiss")
+        """Extracts text from PDF, generates embeddings, and saves to FAISS index file"""
         pdf_filename = os.path.basename(pdf_path)
         faiss_index_file = os.path.join(embedding_folder_path, pdf_filename.replace(".pdf", ".faiss"))
+
         if os.path.exists(faiss_index_file):
             # ✅ Load FAISS index from file
-            print(f"✅ Loading FAISS index from {faiss_index_file}...")
-            vector_store = FAISS.load_local(faiss_index_file, OpenAIEmbeddings(), allow_dangerous_deserialization=True)
-
+            #print(f" Loading FAISS index from {faiss_index_file}...")
+            vector_store = FAISS.load_local(faiss_index_file, embedding, allow_dangerous_deserialization=True)
         else:
             # Process and store embeddings
-            print("⏳ Processing and embedding PDF...")
+            print(f"Processing and embedding PDF: {pdf_filename}...")
             loader = PyMuPDFLoader(pdf_path)
             docs = loader.load()
-            embeddings = OpenAIEmbeddings()
-            vector_store = FAISS.from_documents(docs, embeddings)
+            vector_store = FAISS.from_documents(docs, embedding)
 
             # ✅ Save FAISS index properly
             vector_store.save_local(faiss_index_file)
-            print(f"✅ Saved FAISS index to {faiss_index_file}")
+            print(f"Saved FAISS index to {faiss_index_file}")
 
         return vector_store
 
     def retrieve_and_generate(self, pdf_path, query):
-        """Retrieves the most relevant document section and uses a chain to format output."""
+        """Retrieves relevant document section and generates a response."""
         vector_store = self.ingest_and_embed(pdf_path)  # Load FAISS index
         retriever = vector_store.as_retriever()
         retrieved_docs = retriever.get_relevant_documents(query)
 
-        if retrieved_docs:
-            retrieved_text = retrieved_docs[0].page_content  # Get the most relevant text
-        else:
-            retrieved_text = "No relevant information found in the document."
+        retrieved_text = retrieved_docs[0].page_content if retrieved_docs else "No relevant information found in the document."
 
         # ✅ Define Chain
         prompt_template = """Given the following document context, answer the user query:

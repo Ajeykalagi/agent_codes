@@ -2,6 +2,7 @@ from crewai import Agent, Task, Crew
 from query_generator import generate_sql_query, save_prompt_example
 from query_executor import execute_query
 from config import get_snowflake_credentials, get_database_table
+import sys
 
 # CrewAI Agents
 query_generator_agent = Agent(
@@ -68,40 +69,44 @@ crew = Crew(
 )
 
 def main():
-    print("\n🔹 Welcome to AI SQL Chatbot (Agentic Version) 🔹\n")
+    print("\n Welcome to AI SQL Chatbot (Agentic Version) \n")
 
-    agent_id = input("🔑 Enter AGENTID: ").strip()
-
+    #agent_id = input("Enter AGENTID: ").strip()
+    agent_id =1
     # ✅ Fetch connection credentials from Snowflake table
     creds = get_snowflake_credentials(agent_id)
     if not creds:
-        print("❌ Failed to retrieve database credentials.")
+        print(" Failed to retrieve database credentials.")
         return
 
     # ✅ Fetch table details using the retrieved AGENT_DATABASE_CONNECTION_ID
     table_details = get_database_table(creds["agent_database_connection_id"])
     if not table_details:
-        print("❌ Failed to retrieve table details.")
+        print("Failed to retrieve table details.")
         return
 
     creds["database"], creds["schema"], table_name = table_details["database"], table_details["schema"], table_details["table"]
 
     #while True:
-    user_input = input("\n🔍 Enter your query: ").strip()
+    if len(sys.argv) > 1:
+        user_input = sys.argv[1]
+    else:
+        user_input = input("Enter the question: ")
+    #user_input = input("\nEnter your query: ").strip()
     sql_query = generate_sql_query(user_input, table_name, creds, agent_id)
 
-    print("\n📝 **Generated SQL Query:**")
+    print("\n **Generated SQL Query:**")
     print(sql_query)
 
-    #if input("\n▶️ Execute this query? (yes/no): ").strip().lower() == "yes":
+    #if input("\n Execute this query? (yes/no): ").strip().lower() == "yes":
     result = execute_query(sql_query, creds)
-    print("\n📊 **Query Execution Result:**")
+    print("\n**Query Execution Result:**")
     print(result)
 
-        # if input("\n💾 Save this query? (yes/no): ").strip().lower() == "yes":
+        # if input("\n ave this query? (yes/no): ").strip().lower() == "yes":
         #     save_prompt_example(user_input, sql_query, agent_id)
 
-        # if input("\n🔄 Enter another query? (yes/no): ").strip().lower() != "yes":
+        # if input("\n Enter another query? (yes/no): ").strip().lower() != "yes":
         #     break
 
 if __name__ == "__main__":

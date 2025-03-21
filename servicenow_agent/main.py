@@ -1,8 +1,15 @@
 from crewai import Agent, Task, Crew
 from langchain_openai import ChatOpenAI
 import json
+import os
+import sys
 
-json_file_path = "sagemaker_faq.json"
+# Get the absolute path of the JSON file
+json_file_path = os.path.join(os.path.dirname(__file__), "sagemaker_faq.json")
+
+if not os.path.exists(json_file_path):
+    print(f"⚠️ Error: Missing JSON file {json_file_path}. Please add it to the directory.")
+    exit(1)
 
 # Load JSON data
 with open(json_file_path, "r") as f:
@@ -65,13 +72,13 @@ support_bot_crew = Crew(
 
 # Function to get a response
 def get_support_response(question):
-    print(f"User Question: {question}")
+    #print(f"User Question: {question}")
 
     # Step 1: Check if an answer exists in the JSON
     faq_answer = search_faq(question)
 
     if faq_answer:
-        print("Using FAQ database answer directly.")
+        #print("Using FAQ database answer directly.")
         return faq_answer  # Return answer directly if found in JSON
 
     # Step 2: Otherwise, use AI-powered generation and verification
@@ -81,6 +88,10 @@ def get_support_response(question):
 
 
 # Example Usage
-user_input = input("Enter the question: ")
+
+if len(sys.argv) > 1:
+    user_input = sys.argv[1]
+else:
+    user_input = input("Enter the question: ")
 response = get_support_response(user_input)
 print(f"Final Answer: {response}")
